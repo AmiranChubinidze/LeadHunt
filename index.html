@@ -8,17 +8,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/heroicons@2.1.1/24/outline/index.min.js"></script>
     <style>
       :root {
-        --bg: #0b0b0f;
-        --surface: #111116;
-        --text-primary: #e5e5f0;
-        --text-secondary: #a0a0b0;
-        --accent: #5eead4;
-        --accent-hover: #34d5bd;
-        --error: #f87171;
-        --success: #5eead4;
+        --bg: #0a0a0c;
+        --surface: #121215;
+        --surface-2: #0f0f12;
+        --text-primary: #f2f2f5;
+        --text-secondary: #b7b7c4;
+        --accent: #f3b0b0;
+        --accent-strong: #e98282;
+        --accent-dark: #c96b6b;
+        --border: rgba(255, 255, 255, 0.08);
+        --shadow: rgba(0, 0, 0, 0.55);
       }
       html,
       body {
@@ -26,180 +27,235 @@
         background: var(--bg);
         color: var(--text-primary);
       }
+      .text-text-secondary {
+        color: var(--text-secondary);
+      }
+      .text-text-primary {
+        color: var(--text-primary);
+      }
+      .text-accent {
+        color: var(--accent);
+      }
+      .bg-surface {
+        background: var(--surface);
+      }
+      .bg-surface-2 {
+        background: var(--surface-2);
+      }
+      .border-hairline {
+        border: 1px solid var(--border);
+      }
+      .glow-bg {
+        background-image:
+          radial-gradient(700px 400px at -10% -10%, rgba(243, 176, 176, 0.12), transparent 60%),
+          radial-gradient(600px 380px at 110% 0%, rgba(233, 130, 130, 0.08), transparent 55%),
+          radial-gradient(600px 420px at 90% 110%, rgba(201, 107, 107, 0.08), transparent 55%);
+      }
+      .noise::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.02) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+        opacity: 0.15;
+        pointer-events: none;
+      }
+      .card {
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)) , var(--surface);
+        border: 1px solid var(--border);
+        box-shadow: 0 16px 40px -24px var(--shadow);
+        position: relative;
+        overflow: hidden;
+      }
+      .card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .input {
+        background: #17171b;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 14px;
+        padding: 0.9rem 1rem;
+        height: 52px;
+        color: var(--text-primary);
+      }
+      .input:focus {
+        outline: none;
+        border-color: rgba(243, 176, 176, 0.6);
+        box-shadow: 0 0 0 3px rgba(243, 176, 176, 0.15);
+      }
+      .btn-primary {
+        border-radius: 999px;
+        background: linear-gradient(180deg, rgba(243, 176, 176, 0.95), rgba(233, 130, 130, 0.95));
+        color: #1a1111;
+        font-weight: 600;
+        padding: 0.85rem 1.25rem;
+        box-shadow: 0 10px 24px -16px rgba(243, 176, 176, 0.7);
+        transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      }
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 30px -18px rgba(243, 176, 176, 0.9);
+        filter: brightness(1.03);
+      }
+      .btn-primary:active {
+        transform: translateY(0);
+        box-shadow: 0 8px 18px -14px rgba(243, 176, 176, 0.6);
+      }
+      .btn-outline {
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: var(--text-secondary);
+        padding: 0.7rem 1.25rem;
+        transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+      }
+      .btn-outline:hover {
+        color: var(--text-primary);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+      }
     </style>
   </head>
-  <body class="min-h-full bg-gradient-to-b from-[#0b0b0f] to-[#0b0b0f]">
-    <div class="max-w-xl mx-auto px-5 sm:px-8 py-12 space-y-12">
-      <header class="space-y-3 text-center">
-        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-text-secondary">
-          <span class="h-2 w-2 rounded-full bg-accent"></span>
-          Instagram Influencer Search
-        </div>
-        <h1 class="text-4xl font-semibold tracking-tight">LeadHunt</h1>
-        <p class="text-base font-normal text-text-secondary">
-          Calm, fast hashtag-based discovery for small batches of creators.
-        </p>
-      </header>
-
-      <section id="connect-screen" class="max-w-lg mx-auto mt-16">
-        <div class="rounded-2xl border border-white/6 bg-[#111116]/80 backdrop-blur-xl p-10 space-y-8">
-          <h2 class="text-3xl font-semibold text-center">Connect Instagram</h2>
-          <form id="connect-form" class="space-y-6">
-            <div>
-              <label class="text-sm font-medium text-text-secondary block mb-2">Instagram Username</label>
-              <input
-                id="ig-username"
-                type="text"
-                placeholder="@yourhandle"
-                class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
-              />
-            </div>
-            <div>
-              <label class="text-sm font-medium text-text-secondary block mb-2">Instagram Password</label>
-              <input
-                id="ig-password"
-                type="password"
-                placeholder="••••••••"
-                class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
-              />
-            </div>
-            <button
-              type="submit"
-              class="w-full bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] hover:from-[#38bdf8] hover:to-[#22d3ee] text-white font-medium rounded-xl px-8 py-3.5 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02]"
-            >
-              Connect Account
-            </button>
-          </form>
-          <div id="connect-status" class="text-sm font-medium text-text-secondary text-center"></div>
-        </div>
-      </section>
-
-      <section id="dashboard" class="hidden space-y-10">
-        <div class="rounded-2xl border border-white/6 bg-[#111116]/80 backdrop-blur-xl p-8 space-y-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <h2 class="text-xl font-semibold">Search</h2>
-              <p class="text-sm text-text-secondary">Hashtag-based search with clean filters.</p>
-            </div>
-            <button
-              id="disconnect-btn"
-              class="border border-white/15 text-text-secondary hover:text-white hover:border-white/30 rounded-xl px-6 py-3 transition-colors"
-            >
-              Disconnect
-            </button>
+  <body class="min-h-full glow-bg">
+    <div class="relative min-h-full noise">
+      <div class="max-w-xl mx-auto px-5 sm:px-8 py-12 space-y-12">
+        <header class="space-y-4 text-center">
+          <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-text-secondary">
+            <span class="h-2 w-2 rounded-full" style="background: var(--accent)"></span>
+            Instagram Influencer Search
           </div>
+          <h1 class="text-4xl font-semibold tracking-tight">LeadHunt</h1>
+          <p class="text-base font-normal text-text-secondary">
+            Calm, precise hashtag-based discovery for small batches of creators.
+          </p>
+        </header>
 
-          <form id="search-form" class="space-y-8">
-            <div class="space-y-6">
+        <section id="connect-screen" class="max-w-lg mx-auto mt-16">
+          <div class="card p-10 space-y-8">
+            <h2 class="text-3xl font-semibold text-center">Connect Instagram</h2>
+            <form id="connect-form" class="space-y-6">
               <div>
-                <label class="text-sm font-medium text-text-secondary block mb-2">Niche</label>
-                <select
-                  id="niche"
-                  class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base text-text-primary focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
-                >
-                  <option value="fitness">Fitness</option>
-                  <option value="beauty">Beauty</option>
-                  <option value="travel">Travel</option>
-                  <option value="food">Food</option>
-                  <option value="custom">Custom</option>
-                </select>
+                <label class="text-sm font-medium text-text-secondary block mb-2">Instagram Username</label>
+                <input
+                  id="ig-username"
+                  type="text"
+                  placeholder="@yourhandle"
+                  class="w-full input"
+                />
               </div>
+              <div>
+                <label class="text-sm font-medium text-text-secondary block mb-2">Instagram Password</label>
+                <input
+                  id="ig-password"
+                  type="password"
+                  placeholder="••••••••"
+                  class="w-full input"
+                />
+              </div>
+              <button type="submit" class="w-full btn-primary">
+                Connect Account
+              </button>
+            </form>
+            <div id="connect-status" class="text-sm font-medium text-text-secondary text-center"></div>
+          </div>
+        </section>
 
-              <div id="custom-tags" class="grid grid-cols-1 sm:grid-cols-3 gap-4 hidden">
-                <div>
-                  <label class="text-sm font-medium text-text-secondary block mb-2">Hashtag 1</label>
-                  <input
-                    id="tag-1"
-                    type="text"
-                    placeholder="fitness"
-                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
-                  />
-                </div>
-                <div>
-                  <label class="text-sm font-medium text-text-secondary block mb-2">Hashtag 2</label>
-                  <input
-                    id="tag-2"
-                    type="text"
-                    placeholder="workout"
-                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
-                  />
-                </div>
-                <div>
-                  <label class="text-sm font-medium text-text-secondary block mb-2">Hashtag 3</label>
-                  <input
-                    id="tag-3"
-                    type="text"
-                    placeholder="gym"
-                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
-                  />
-                </div>
+        <section id="dashboard" class="hidden space-y-10">
+          <div class="card p-8 space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-xl font-semibold">Search</h2>
+                <p class="text-sm text-text-secondary">Hashtag-based search with clean filters.</p>
               </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label class="text-sm font-medium text-text-secondary block mb-2">Min Followers</label>
-                  <input
-                    id="min-f"
-                    type="number"
-                    value="1000"
-                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
-                  />
-                </div>
-                <div>
-                  <label class="text-sm font-medium text-text-secondary block mb-2">Max Followers</label>
-                  <input
-                    id="max-f"
-                    type="number"
-                    value="50000"
-                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
-                  />
-                </div>
-                <div>
-                  <label class="text-sm font-medium text-text-secondary block mb-2">Min Engagement</label>
-                  <input
-                    id="min-e"
-                    type="number"
-                    step="0.01"
-                    value="0.02"
-                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
-                  />
-                </div>
-              </div>
+              <button id="disconnect-btn" class="btn-outline">
+                Disconnect
+              </button>
             </div>
 
-            <button
-              type="submit"
-              class="w-full bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] hover:from-[#38bdf8] hover:to-[#22d3ee] text-white font-medium rounded-xl px-8 py-3.5 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02]"
-            >
-              Search
-            </button>
-          </form>
+            <form id="search-form" class="space-y-8">
+              <div class="space-y-6">
+                <div>
+                  <label class="text-sm font-medium text-text-secondary block mb-2">Niche</label>
+                  <select id="niche" class="w-full input">
+                    <option value="fitness">Fitness</option>
+                    <option value="beauty">Beauty</option>
+                    <option value="travel">Travel</option>
+                    <option value="food">Food</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </div>
 
-          <div id="search-status" class="text-sm font-medium text-text-secondary"></div>
-        </div>
+                <div id="custom-tags" class="grid grid-cols-1 sm:grid-cols-3 gap-4 hidden">
+                  <div>
+                    <label class="text-sm font-medium text-text-secondary block mb-2">Hashtag 1</label>
+                    <input id="tag-1" type="text" placeholder="fitness" class="w-full input" />
+                  </div>
+                  <div>
+                    <label class="text-sm font-medium text-text-secondary block mb-2">Hashtag 2</label>
+                    <input id="tag-2" type="text" placeholder="workout" class="w-full input" />
+                  </div>
+                  <div>
+                    <label class="text-sm font-medium text-text-secondary block mb-2">Hashtag 3</label>
+                    <input id="tag-3" type="text" placeholder="gym" class="w-full input" />
+                  </div>
+                </div>
 
-        <div class="rounded-2xl border border-white/6 bg-[#111116]/80 backdrop-blur-xl p-8 space-y-6">
-          <h3 class="text-xl font-semibold">Results</h3>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left">
-              <thead class="border-b border-white/10 text-text-secondary text-sm font-medium">
-                <tr>
-                  <th class="py-3">Username</th>
-                  <th class="py-3">Followers</th>
-                  <th class="py-3">Engagement</th>
-                </tr>
-              </thead>
-              <tbody id="results-body" class="text-base">
-                <tr class="border-b border-white/5 last:border-none">
-                  <td class="py-4 text-text-secondary">No results yet</td>
-                  <td class="py-4 text-text-secondary">—</td>
-                  <td class="py-4 text-text-secondary">—</td>
-                </tr>
-              </tbody>
-            </table>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label class="text-sm font-medium text-text-secondary block mb-2">Min Followers</label>
+                    <input id="min-f" type="number" value="1000" class="w-full input" />
+                  </div>
+                  <div>
+                    <label class="text-sm font-medium text-text-secondary block mb-2">Max Followers</label>
+                    <input id="max-f" type="number" value="50000" class="w-full input" />
+                  </div>
+                  <div>
+                    <label class="text-sm font-medium text-text-secondary block mb-2">Min Engagement</label>
+                    <input id="min-e" type="number" step="0.01" value="0.02" class="w-full input" />
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" class="w-full btn-primary">
+                Search
+              </button>
+            </form>
+
+            <div id="search-status" class="text-sm font-medium text-text-secondary"></div>
           </div>
-        </div>
-      </section>
+
+          <div class="card p-8 space-y-6">
+            <h3 class="text-xl font-semibold">Results</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="border-b border-white/10 text-text-secondary text-sm font-medium">
+                  <tr>
+                    <th class="py-3">Username</th>
+                    <th class="py-3">Followers</th>
+                    <th class="py-3">Engagement</th>
+                  </tr>
+                </thead>
+                <tbody id="results-body" class="text-base">
+                  <tr class="border-b border-white/5 last:border-none">
+                    <td class="py-6 text-text-secondary text-center" colspan="3">No results yet</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
     <script>
@@ -257,16 +313,16 @@
           const data = await res.json();
           if (!res.ok) {
             connectStatus.textContent = data.detail || "Connection failed";
-            connectStatus.className = "text-sm font-medium text-error text-center";
+            connectStatus.className = "text-sm font-medium text-accent text-center";
             return;
           }
           connectStatus.textContent = "Connected";
-          connectStatus.className = "text-sm font-medium text-success text-center";
+          connectStatus.className = "text-sm font-medium text-accent text-center";
           setConnected(true);
           showDashboard();
         } catch (err) {
           connectStatus.textContent = "Network error";
-          connectStatus.className = "text-sm font-medium text-error text-center";
+          connectStatus.className = "text-sm font-medium text-accent text-center";
         }
       });
 
@@ -280,16 +336,14 @@
         if (!results.length) {
           resultsBody.innerHTML = `
             <tr class="border-b border-white/5 last:border-none">
-              <td class="py-4 text-text-secondary">No results</td>
-              <td class="py-4 text-text-secondary">—</td>
-              <td class="py-4 text-text-secondary">—</td>
+              <td class="py-6 text-text-secondary text-center" colspan="3">No results</td>
             </tr>
           `;
           return;
         }
         for (const r of results) {
           const row = document.createElement("tr");
-          row.className = "border-b border-white/5 last:border-none hover:bg-white/3";
+          row.className = "border-b border-white/5 last:border-none hover:bg-white/5";
           row.innerHTML = `
             <td class="py-4"><a class="text-accent hover:underline" href="https://instagram.com/${r.ig_username}" target="_blank">@${r.ig_username}</a></td>
             <td class="py-4">${r.follower_count}</td>
@@ -322,15 +376,15 @@
           const data = await res.json();
           if (!res.ok) {
             searchStatus.textContent = data.detail || "Search failed";
-            searchStatus.className = "text-sm font-medium text-error";
+            searchStatus.className = "text-sm font-medium text-accent";
             return;
           }
           searchStatus.textContent = "Done";
-          searchStatus.className = "text-sm font-medium text-success";
+          searchStatus.className = "text-sm font-medium text-accent";
           renderResults(data.results || []);
         } catch (err) {
           searchStatus.textContent = "Network error";
-          searchStatus.className = "text-sm font-medium text-error";
+          searchStatus.className = "text-sm font-medium text-accent";
         }
       });
     </script>

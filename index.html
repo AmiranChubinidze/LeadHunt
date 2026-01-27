@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeadHunt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/heroicons@2.1.1/24/outline/index.min.js"></script>
+    <style>
+      :root {
+        --bg: #0b0b0f;
+        --surface: #111116;
+        --text-primary: #e5e5f0;
+        --text-secondary: #a0a0b0;
+        --accent: #5eead4;
+        --accent-hover: #34d5bd;
+        --error: #f87171;
+        --success: #5eead4;
+      }
+      html,
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--bg);
+        color: var(--text-primary);
+      }
+    </style>
+  </head>
+  <body class="min-h-full bg-gradient-to-b from-[#0b0b0f] to-[#0b0b0f]">
+    <div class="max-w-xl mx-auto px-5 sm:px-8 py-12 space-y-12">
+      <header class="space-y-3 text-center">
+        <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-text-secondary">
+          <span class="h-2 w-2 rounded-full bg-accent"></span>
+          Instagram Influencer Search
+        </div>
+        <h1 class="text-4xl font-semibold tracking-tight">LeadHunt</h1>
+        <p class="text-base font-normal text-text-secondary">
+          Calm, fast hashtag-based discovery for small batches of creators.
+        </p>
+      </header>
+
+      <section id="connect-screen" class="max-w-lg mx-auto mt-16">
+        <div class="rounded-2xl border border-white/6 bg-[#111116]/80 backdrop-blur-xl p-10 space-y-8">
+          <h2 class="text-3xl font-semibold text-center">Connect Instagram</h2>
+          <form id="connect-form" class="space-y-6">
+            <div>
+              <label class="text-sm font-medium text-text-secondary block mb-2">Instagram Username</label>
+              <input
+                id="ig-username"
+                type="text"
+                placeholder="@yourhandle"
+                class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
+              />
+            </div>
+            <div>
+              <label class="text-sm font-medium text-text-secondary block mb-2">Instagram Password</label>
+              <input
+                id="ig-password"
+                type="password"
+                placeholder="••••••••"
+                class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] hover:from-[#38bdf8] hover:to-[#22d3ee] text-white font-medium rounded-xl px-8 py-3.5 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02]"
+            >
+              Connect Account
+            </button>
+          </form>
+          <div id="connect-status" class="text-sm font-medium text-text-secondary text-center"></div>
+        </div>
+      </section>
+
+      <section id="dashboard" class="hidden space-y-10">
+        <div class="rounded-2xl border border-white/6 bg-[#111116]/80 backdrop-blur-xl p-8 space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-xl font-semibold">Search</h2>
+              <p class="text-sm text-text-secondary">Hashtag-based search with clean filters.</p>
+            </div>
+            <button
+              id="disconnect-btn"
+              class="border border-white/15 text-text-secondary hover:text-white hover:border-white/30 rounded-xl px-6 py-3 transition-colors"
+            >
+              Disconnect
+            </button>
+          </div>
+
+          <form id="search-form" class="space-y-8">
+            <div class="space-y-6">
+              <div>
+                <label class="text-sm font-medium text-text-secondary block mb-2">Niche</label>
+                <select
+                  id="niche"
+                  class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base text-text-primary focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
+                >
+                  <option value="fitness">Fitness</option>
+                  <option value="beauty">Beauty</option>
+                  <option value="travel">Travel</option>
+                  <option value="food">Food</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="text-sm font-medium text-text-secondary block mb-2">Min Followers</label>
+                  <input
+                    id="min-f"
+                    type="number"
+                    value="1000"
+                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
+                  />
+                </div>
+                <div>
+                  <label class="text-sm font-medium text-text-secondary block mb-2">Max Followers</label>
+                  <input
+                    id="max-f"
+                    type="number"
+                    value="50000"
+                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
+                  />
+                </div>
+                <div>
+                  <label class="text-sm font-medium text-text-secondary block mb-2">Min Engagement</label>
+                  <input
+                    id="min-e"
+                    type="number"
+                    step="0.01"
+                    value="0.02"
+                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-[#0ea5e9] to-[#06b6d4] hover:from-[#38bdf8] hover:to-[#22d3ee] text-white font-medium rounded-xl px-8 py-3.5 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02]"
+            >
+              Search
+            </button>
+          </form>
+
+          <div id="search-status" class="text-sm font-medium text-text-secondary"></div>
+        </div>
+
+        <div class="rounded-2xl border border-white/6 bg-[#111116]/80 backdrop-blur-xl p-8 space-y-6">
+          <h3 class="text-xl font-semibold">Results</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="border-b border-white/10 text-text-secondary text-sm font-medium">
+                <tr>
+                  <th class="py-3">Username</th>
+                  <th class="py-3">Followers</th>
+                  <th class="py-3">Engagement</th>
+                </tr>
+              </thead>
+              <tbody id="results-body" class="text-base">
+                <tr class="border-b border-white/5 last:border-none">
+                  <td class="py-4 text-text-secondary">No results yet</td>
+                  <td class="py-4 text-text-secondary">—</td>
+                  <td class="py-4 text-text-secondary">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const connectScreen = document.getElementById("connect-screen");
+      const dashboard = document.getElementById("dashboard");
+      const connectForm = document.getElementById("connect-form");
+      const searchForm = document.getElementById("search-form");
+      const connectStatus = document.getElementById("connect-status");
+      const searchStatus = document.getElementById("search-status");
+      const resultsBody = document.getElementById("results-body");
+      const disconnectBtn = document.getElementById("disconnect-btn");
+
+      function showDashboard() {
+        connectScreen.classList.add("hidden");
+        dashboard.classList.remove("hidden");
+      }
+
+      function showConnect() {
+        dashboard.classList.add("hidden");
+        connectScreen.classList.remove("hidden");
+      }
+
+      function setConnected(value) {
+        localStorage.setItem("connected", value ? "1" : "0");
+      }
+
+      if (localStorage.getItem("connected") === "1") {
+        showDashboard();
+      }
+
+      connectForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        connectStatus.textContent = "Connecting...";
+        connectStatus.className = "text-sm font-medium text-text-secondary text-center";
+
+        const ig_username = document.getElementById("ig-username").value.trim();
+        const ig_password = document.getElementById("ig-password").value;
+
+        try {
+          const res = await fetch("/connect-ig", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ig_username, ig_password }),
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            connectStatus.textContent = data.detail || "Connection failed";
+            connectStatus.className = "text-sm font-medium text-error text-center";
+            return;
+          }
+          connectStatus.textContent = "Connected";
+          connectStatus.className = "text-sm font-medium text-success text-center";
+          setConnected(true);
+          showDashboard();
+        } catch (err) {
+          connectStatus.textContent = "Network error";
+          connectStatus.className = "text-sm font-medium text-error text-center";
+        }
+      });
+
+      disconnectBtn.addEventListener("click", () => {
+        setConnected(false);
+        showConnect();
+      });
+
+      function renderResults(results) {
+        resultsBody.innerHTML = "";
+        if (!results.length) {
+          resultsBody.innerHTML = `
+            <tr class="border-b border-white/5 last:border-none">
+              <td class="py-4 text-text-secondary">No results</td>
+              <td class="py-4 text-text-secondary">—</td>
+              <td class="py-4 text-text-secondary">—</td>
+            </tr>
+          `;
+          return;
+        }
+        for (const r of results) {
+          const row = document.createElement("tr");
+          row.className = "border-b border-white/5 last:border-none hover:bg-white/3";
+          row.innerHTML = `
+            <td class="py-4"><a class="text-accent hover:underline" href="https://instagram.com/${r.ig_username}" target="_blank">@${r.ig_username}</a></td>
+            <td class="py-4">${r.follower_count}</td>
+            <td class="py-4">${(r.engagement_rate * 100).toFixed(2)}%</td>
+          `;
+          resultsBody.appendChild(row);
+        }
+      }
+
+      searchForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        searchStatus.textContent = "Searching...";
+        searchStatus.className = "text-sm font-medium text-text-secondary";
+
+        const niche = document.getElementById("niche").value;
+        const min_f = document.getElementById("min-f").value;
+        const max_f = document.getElementById("max-f").value;
+        const min_e = document.getElementById("min-e").value;
+
+        const params = new URLSearchParams({ niche, min_f, max_f, min_e });
+
+        try {
+          const res = await fetch(`/search?${params.toString()}`);
+          const data = await res.json();
+          if (!res.ok) {
+            searchStatus.textContent = data.detail || "Search failed";
+            searchStatus.className = "text-sm font-medium text-error";
+            return;
+          }
+          searchStatus.textContent = "Done";
+          searchStatus.className = "text-sm font-medium text-success";
+          renderResults(data.results || []);
+        } catch (err) {
+          searchStatus.textContent = "Network error";
+          searchStatus.className = "text-sm font-medium text-error";
+        }
+      });
+    </script>
+  </body>
+</html>

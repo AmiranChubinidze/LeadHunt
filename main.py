@@ -118,10 +118,10 @@ def connect_ig(payload: ConnectIGRequest, request: Request = None):
 
 @app.get("/search", response_model=SearchResponse)
 @limiter.limit("5/hour")
-def search(niche: str, min_f: int = 0, max_f: int = 10000000, min_e: float = 0.0, request: Request = None):
+def search(niche: str, min_f: int = 0, max_f: int = 10000000, min_e: float = 0.0, tags: str | None = None, request: Request = None):
     enforce_internal_cap(request.state.user_id)
 
-    if niche not in HASHTAG_MAP:
+    if niche not in HASHTAG_MAP and niche != "custom":
         raise HTTPException(status_code=400, detail="Unsupported niche")
 
     ig_username = request.state.ig_username
@@ -146,7 +146,15 @@ def search(niche: str, min_f: int = 0, max_f: int = 10000000, min_e: float = 0.0
 
     results = []
     seen_user_ids = set()
-    hashtags = HASHTAG_MAP[niche][:3]
+    if niche == "custom":
+        if not tags:
+            raise HTTPException(status_code=400, detail="Custom hashtags required")
+        hashtags = [t.strip().lstrip("#") for t in tags.split(",") if t.strip()]
+        hashtags = hashtags[:3]
+        if not hashtags:
+            raise HTTPException(status_code=400, detail="Custom hashtags required")
+    else:
+        hashtags = HASHTAG_MAP[niche][:3]
 
     try:
         for tag in hashtags:

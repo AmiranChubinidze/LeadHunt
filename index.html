@@ -101,7 +101,38 @@
                   <option value="beauty">Beauty</option>
                   <option value="travel">Travel</option>
                   <option value="food">Food</option>
+                  <option value="custom">Custom</option>
                 </select>
+              </div>
+
+              <div id="custom-tags" class="grid grid-cols-1 sm:grid-cols-3 gap-4 hidden">
+                <div>
+                  <label class="text-sm font-medium text-text-secondary block mb-2">Hashtag 1</label>
+                  <input
+                    id="tag-1"
+                    type="text"
+                    placeholder="fitness"
+                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
+                  />
+                </div>
+                <div>
+                  <label class="text-sm font-medium text-text-secondary block mb-2">Hashtag 2</label>
+                  <input
+                    id="tag-2"
+                    type="text"
+                    placeholder="workout"
+                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
+                  />
+                </div>
+                <div>
+                  <label class="text-sm font-medium text-text-secondary block mb-2">Hashtag 3</label>
+                  <input
+                    id="tag-3"
+                    type="text"
+                    placeholder="gym"
+                    class="w-full bg-[#1a1a22] border border-white/10 rounded-xl px-4 py-3.5 text-base placeholder:text-gray-500 focus:border-accent/50 focus:ring-1 focus:ring-accent/30 outline-none"
+                  />
+                </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -180,6 +211,8 @@
       const searchStatus = document.getElementById("search-status");
       const resultsBody = document.getElementById("results-body");
       const disconnectBtn = document.getElementById("disconnect-btn");
+      const nicheSelect = document.getElementById("niche");
+      const customTags = document.getElementById("custom-tags");
 
       function showDashboard() {
         connectScreen.classList.add("hidden");
@@ -198,6 +231,14 @@
       if (localStorage.getItem("connected") === "1") {
         showDashboard();
       }
+
+      nicheSelect.addEventListener("change", () => {
+        if (nicheSelect.value === "custom") {
+          customTags.classList.remove("hidden");
+        } else {
+          customTags.classList.add("hidden");
+        }
+      });
 
       connectForm.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -269,6 +310,12 @@
         const min_e = document.getElementById("min-e").value;
 
         const params = new URLSearchParams({ niche, min_f, max_f, min_e });
+        if (niche === "custom") {
+          const tag1 = document.getElementById("tag-1").value.trim();
+          const tag2 = document.getElementById("tag-2").value.trim();
+          const tag3 = document.getElementById("tag-3").value.trim();
+          params.set("tags", [tag1, tag2, tag3].filter(Boolean).join(","));
+        }
 
         try {
           const res = await fetch(`/search?${params.toString()}`);

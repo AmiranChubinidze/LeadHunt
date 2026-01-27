@@ -47,9 +47,10 @@
       }
       .glow-bg {
         background-image:
-          radial-gradient(700px 400px at -10% -10%, rgba(243, 176, 176, 0.12), transparent 60%),
-          radial-gradient(600px 380px at 110% 0%, rgba(233, 130, 130, 0.08), transparent 55%),
-          radial-gradient(600px 420px at 90% 110%, rgba(201, 107, 107, 0.08), transparent 55%);
+          radial-gradient(700px 420px at -10% -10%, rgba(243, 176, 176, 0.18), transparent 62%),
+          radial-gradient(700px 420px at 110% 0%, rgba(233, 130, 130, 0.12), transparent 60%),
+          radial-gradient(700px 480px at 90% 110%, rgba(201, 107, 107, 0.12), transparent 60%),
+          linear-gradient(135deg, rgba(50, 10, 12, 0.35), rgba(10, 10, 12, 0.9) 50%, rgba(10, 10, 12, 0.98));
       }
       .noise::before {
         content: "";
@@ -94,6 +95,29 @@
         outline: none;
         border-color: rgba(243, 176, 176, 0.6);
         box-shadow: 0 0 0 3px rgba(243, 176, 176, 0.15);
+      }
+      .select-wrap {
+        position: relative;
+      }
+      .select-wrap::after {
+        content: "";
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 10px;
+        border-right: 2px solid rgba(243, 176, 176, 0.7);
+        border-bottom: 2px solid rgba(243, 176, 176, 0.7);
+        transform: translateY(-50%) rotate(45deg);
+        pointer-events: none;
+      }
+      select.input {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding-right: 2.5rem;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
       }
       .btn-primary {
         border-radius: 999px;
@@ -187,13 +211,15 @@
               <div class="space-y-6">
                 <div>
                   <label class="text-sm font-medium text-text-secondary block mb-2">Niche</label>
-                  <select id="niche" class="w-full input">
-                    <option value="fitness">Fitness</option>
-                    <option value="beauty">Beauty</option>
-                    <option value="travel">Travel</option>
-                    <option value="food">Food</option>
-                    <option value="custom">Custom</option>
-                  </select>
+                  <div class="select-wrap">
+                    <select id="niche" class="w-full input">
+                      <option value="fitness">Fitness</option>
+                      <option value="beauty">Beauty</option>
+                      <option value="travel">Travel</option>
+                      <option value="food">Food</option>
+                      <option value="custom">Custom</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div id="custom-tags" class="grid grid-cols-1 sm:grid-cols-3 gap-4 hidden">

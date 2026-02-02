@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -42,20 +43,64 @@ def get_redis():
         return None
 
 
-def get_instagram_client(settings_dict: dict | None):
+def get_proxy_session_id(ig_username: str | None) -> str | None:
+    if not ig_username:
+        return None
+    session_path = get_base_dir() / "sessions" / f"__proxy_{ig_username.replace('@', '')}.txt"
+    if session_path.exists():
+        value = session_path.read_text(encoding="utf-8").strip()
+        if value:
+            return value
+    digest = hashlib.sha1(ig_username.encode("utf-8")).hexdigest()[:12]
+    session_path.write_text(digest, encoding="utf-8")
+    return digest
+
+
+def build_proxy_username(ig_username: str | None) -> str | None:
+    proxy_user = os.getenv("PROXY_USER")
+    if not proxy_user:
+        return None
+    template = os.getenv("PROXY_USER_TEMPLATE")
+    if template:
+        session_id = get_proxy_session_id(ig_username) or ""
+        return (
+            template.replace("{user}", proxy_user)
+            .replace("{session}", session_id)
+            .replace("{ig}", ig_username or "")
+            .replace("{country}", os.getenv("PROXY_COUNTRY", ""))
+            .replace("{region}", os.getenv("PROXY_REGION", ""))
+            .replace("{city}", os.getenv("PROXY_CITY", ""))
+        )
+    session_id = os.getenv("PROXY_SESSION") or get_proxy_session_id(ig_username)
+    if session_id:
+        return f"{proxy_user}-session-{session_id}"
+    return proxy_user
+
+
+def get_instagram_client(settings_dict: dict | None, ig_username: str | None = None):
     client = Client()
     client.delay_range = [4, 12]
+    proxy_host = os.getenv("PROXY_HOST")
+    proxy_port = os.getenv("PROXY_PORT")
+    proxy_user = build_proxy_username(ig_username)
+    proxy_pass = os.getenv("PROXY_PASS")
+    if proxy_host and proxy_port and proxy_user and proxy_pass:
+        client.set_proxy(f"http://{proxy_user}:{proxy_pass}@{proxy_host}:{proxy_port}")
     if settings_dict:
         client.set_settings(settings_dict)
     return client
 
 
+def get_base_dir() -> Path:
+    return Path(__file__).resolve().parent
+
+
 def ensure_sessions_dir():
-    path = Path("sessions")
+    path = get_base_dir() / "sessions"
     path.mkdir(parents=True, exist_ok=True)
     return path
 
 
 def get_session_path(username: str) -> Path:
     safe = username.replace("@", "")
-    return Path("sessions") / f"{safe}.enc"
+    return get_base_dir() / "sessions" / f"{safe}.enc"

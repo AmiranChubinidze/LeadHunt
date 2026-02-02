@@ -104,12 +104,11 @@
         position: absolute;
         right: 18px;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-50%) rotate(45deg);
         width: 10px;
         height: 10px;
         border-right: 2px solid rgba(243, 176, 176, 0.7);
         border-bottom: 2px solid rgba(243, 176, 176, 0.7);
-        transform: translateY(-50%) rotate(45deg);
         pointer-events: none;
       }
       select.input {
@@ -183,7 +182,7 @@
                 <input
                   id="ig-password"
                   type="password"
-                  placeholder="••••••••"
+                  placeholder="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
                   class="w-full input"
                 />
               </div>
@@ -345,6 +344,7 @@
           connectStatus.textContent = "Connected";
           connectStatus.className = "text-sm font-medium text-accent text-center";
           setConnected(true);
+          localStorage.setItem("ig_username", ig_username);
           showDashboard();
         } catch (err) {
           connectStatus.textContent = "Network error";
@@ -354,6 +354,7 @@
 
       disconnectBtn.addEventListener("click", () => {
         setConnected(false);
+        localStorage.removeItem("ig_username");
         showConnect();
       });
 
@@ -388,8 +389,12 @@
         const min_f = document.getElementById("min-f").value;
         const max_f = document.getElementById("max-f").value;
         const min_e = document.getElementById("min-e").value;
+        const ig_username = localStorage.getItem("ig_username") || "";
 
         const params = new URLSearchParams({ niche, min_f, max_f, min_e });
+        if (ig_username) {
+          params.set("ig_username", ig_username);
+        }
         if (niche === "custom") {
           const tag1 = document.getElementById("tag-1").value.trim();
           const tag2 = document.getElementById("tag-2").value.trim();
